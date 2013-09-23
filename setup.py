@@ -1,0 +1,32 @@
+# -*- coding:utf-8 -*-
+
+from setuptools import setup
+
+import sys
+sys.path.append('src')
+sys.path.append('test')
+
+from src import __version__, __license__, __author__, __email__, __doc__
+
+setup(
+    name         = 'pyfunctor',
+    version      = __version__,
+    description  = 'A Functor library for Python',
+    long_description = __doc__,
+    author       = __author__,
+    author_email = __email__,
+    license      = __license__,
+    url          = 'https://github.com/jnamika/pyfunctor',
+    keywords     = 'functor lazy pipeline block',
+    packages     = ['pyfunctor'],
+    package_dir  = {'pyfunctor' : 'src'},
+    test_suite   = 'test4pyfunctor',
+    classifiers  = [
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: %s' % __license__,
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Topic :: Software Development :: Libraries :: Python Modules'
+    ]
+)
