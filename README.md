@@ -1,11 +1,11 @@
-pyfunctor: A Functor library for Python (with lazy evaluation, pipeline operators and block syntax)
+*pyfunctor*: _A Functor library for Python_ (with lazy evaluation, pipeline operators and block syntax)
 
 Copyright (c) 2013, Jun Namikawa <jnamika@gmail.com>
 License: ISC License (ISCL)
 
 
 
-pyfunctor is a Python Functor library that provides classes implementing lazy evaluation, pipeline operators and block syntax.
+**pyfunctor** is a Python Functor library that provides classes implementing lazy evaluation, pipeline operators and block syntax.
 
 An example of usages is following:
 
@@ -104,7 +104,6 @@ with構文で生成されたインスタンス(with * as varname の varname）�
     ...         return x % 7
     ...     def b(x):
     ...         return x * 2
-    ...
     >>> box.value
     8
     >>> run(box >> (lambda x: x * 2))
