@@ -37,9 +37,8 @@ The object is only once evaluated after the with-block is done.
 
 
 
-
-pyfunctorチュートリアル
-
+## pyfunctorチュートリアル
+------------------
 はじめに:
 pyfunctorはPython用のFunctorライブラリです。遅延評価、パイプライン演算子、with構文を利用したブロックをサポートしています。
 
@@ -114,7 +113,7 @@ with構文で生成されたインスタンス(with * as varname の varname）�
 
 
 (6)
-リスト等に対する処理をサポートするため、部分適用を補助する関数c_が存在します。
+リスト等に対する処理をサポートするため、部分適用を補助する関数c\_が存在します。
 次の処理は sorted(filter(lambda x: x < 7, map(lambda x: x * 2, range(10))), key=lambda x: -x) と同等です。
 
     >>> run(F(range(10)) >> c_(map)(lambda x: x * 2)
@@ -122,7 +121,7 @@ with構文で生成されたインスタンス(with * as varname の varname）�
     ...                  >> c_(sorted).key(lambda x: -x))
     [6, 4, 2, 0]
 
-また、c_をデコレータとして使用することもできます。
+また、c\_をデコレータとして使用することもできます。
 
     >>> with F(range(10)) as box:
     ...     @c_(map)
@@ -159,3 +158,14 @@ Functorクラスはデフォルトの挙動としてIdentityを実装してい�
     >>> f = lift(lambda x, y: (x, y))
     >>> run(f(L(range(3)), L('ab')))
     [(0, 'a'), (0, 'b'), (1, 'a'), (1, 'b'), (2, 'a'), (2, 'b')]
+
+
+(9)
+pyfunctorが提供するデコレータ（c\_, call）以外のデコレータをwith構文の中で使用する場合、Functorクラスのcallメソッドか、call関数を併用する必要があります。
+もしcallを使用しない場合、デコレータを使った関数は無視されてしまいます（これはデコレータが内部で生成する関数がwithブロックの外側で定義されるためです）。
+
+    >>> with F('abc'):
+    ...     @call
+    ...     @deco
+    ...     def f(x):
+    ...         print(x)

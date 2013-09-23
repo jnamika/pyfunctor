@@ -5,7 +5,7 @@ lazy evaluation, pipeline operators and block syntax.
 
 An example of usages is following:
 
-    >>> from functor import *
+    >>> from pyfunctor.functor import *
     >>> f = (Functor(range(10)) >> c_(map)(lambda x: x * 2)
     ...      >> c_(filter)(lambda x: x < 7)
     ...      >> c_(sorted).key(lambda x: -x))
@@ -35,5 +35,5 @@ The object is only once evaluated after the with-block is done.
 
 __author__ = 'Jun Namikawa'
 __email__ = 'jnamika@gmail.com'
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 __license__ = 'ISC License (ISCL)'
