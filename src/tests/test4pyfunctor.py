@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 
-from functor import Functor, c_
-from list import ListF
+from pyfunctor.functor import Functor, c_
+from pyfunctor.list import ListF
+from pyfunctor.maybe import Just, Nothing
 import unittest
 
 
@@ -63,6 +64,20 @@ class TestListF(unittest.TestCase):
         f2 = ListF(xs) >> add1 >> str
         f3 = ListF([str(add1(x)) for x in xs])
         self.assertEqual(f2(), f3())
+
+
+class TestMaybe(unittest.TestCase):
+    def test_functor_law(self):
+        x = Just(1)
+        f1 = x >> (lambda x: x)
+        self.assertEqual(f1(), x)
+        f2 = Nothing >> (lambda x: x)
+        self.assertEqual(f2(), Nothing)
+        add1 = lambda x: x + 1
+        n = 1
+        f3 = Just(n) >> add1 >> str
+        f4 = Just(str(add1(n)))
+        self.assertEqual(f3(), f4())
 
 if __name__ == '__main__':
     unittest.main()

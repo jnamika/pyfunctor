@@ -19,8 +19,8 @@ An example of usages is following:
 The 'Functor' class packs a value into a context.
 The pipeline operator '>>' composes functions, but it is not calculated until 'run' function is applied to the Functor object.
 
-Furthermore, Functor object will work together with the 'with' statement.
-The object is only once evaluated after the with-block is done.
+Furthermore, 'Functor' instance will work together with the 'with' statement.
+The instance is only once evaluated after the with-block is done.
 
     >>> with Functor(range(10)) as box:
     ...     @c_(map)
@@ -35,6 +35,26 @@ The object is only once evaluated after the with-block is done.
     >>> box.value
     [0, 14, 8, 16, 10, 18, 4, 12, 6, 20]
 
+In general, functors are things that can be mapped over, like Lists, Maybes and such.
+The 'Functor' class implements the identity functor to provide a default implementation.
+As other examples, 'ListF' and 'Maybe' are provided.
+
+    >>> from pyfunctor.list import *
+    >>> run(ListF([1, 2, 3]) >> (lambda x: x + 1))
+    [2, 3, 4]
+    >>> f = lift(lambda x, y: (x, y))
+    >>> run(f(ListF(range(3)), ListF('ab')))
+    [(0, 'a'), (0, 'b'), (1, 'a'), (1, 'b'), (2, 'a'), (2, 'b')]
+
+    >>> from pyfunctor.maybe import *
+    >>> @lift
+    ... def func(x):
+    ...     if x > 0: return x * 2
+    ...     else: raise Exception()
+    >>> func(Just(1)).run()
+    Just(2)
+    >>> func(Just(0)).run()
+    Nothing
 
 
 ## pyfunctorチュートリアル
@@ -150,7 +170,7 @@ with構文の中で定義済みの関数を連結する場合にはcallメソッ
 (8)
 Functorクラスはデフォルトの挙動としてIdentityを実装しています。
 しかし、Functor則を満たすものならばFunctorクラスを継承して実装できます。
-一例としてリストのFunctorを実装したpyfunctor.list.ListF（別名L）が提供されています。
+一例としてリストのFunctorを実装したpyfunctor.list.ListF（別名L）や、Maybeを実装したpyfunctor.maybe.Maybeが提供されています。
 
     >>> run(L([1, 2, 3]) >> (lambda x: x + 1))
     [2, 3, 4]
@@ -158,6 +178,11 @@ Functorクラスはデフォルトの挙動としてIdentityを実装してい�
     >>> run(f(L(range(3)), L('ab')))
     [(0, 'a'), (0, 'b'), (1, 'a'), (1, 'b'), (2, 'a'), (2, 'b')]
 
+    >>> f = lift(lambda x, y: x + y)
+    >>> run(f(Just('a'), Just('b')))
+    Just('ab')
+    >>> run(f(Just(0), Nothing))
+    Nothing
 
 (9)
 pyfunctorが提供するデコレータ（c\_, call）以外のデコレータをwith構文の中で使用する場合、Functorクラスのcallメソッドか、call関数を併用する必要があります。

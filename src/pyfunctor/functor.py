@@ -39,7 +39,7 @@ class Functor:
     @classmethod
     def lift(cls, f):
         def _f(*margs):
-            args = [m.run() for m in margs]
+            args = (m.run() for m in margs)
             return cls.fmap(f)(*args)
         return _f
 
@@ -60,6 +60,10 @@ class Functor:
 
     def __call__(self):
         return self.run()
+
+    def __eq__(self, x):
+        return (self.__class__ == x.__class__ and self.fs == x.fs and
+                self.value == x.value)
 
     def __enter__(self):
         def call(self, f):

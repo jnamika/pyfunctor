@@ -4,9 +4,9 @@ from setuptools import setup
 
 import sys
 sys.path.append('src')
-sys.path.append('test')
+sys.path.append('src/tests')
 
-from src import __version__, __license__, __author__, __email__, __doc__
+from pyfunctor import __version__, __license__, __author__, __email__, __doc__
 
 setup(
     name         = 'pyfunctor',
@@ -19,7 +19,7 @@ setup(
     url          = 'https://github.com/jnamika/pyfunctor',
     keywords     = 'functor lazy pipeline block',
     packages     = ['pyfunctor'],
-    package_dir  = {'pyfunctor' : 'src'},
+    package_dir  = {'' : 'src'},
     test_suite   = 'test4pyfunctor',
     classifiers  = [
         'Development Status :: 3 - Alpha',

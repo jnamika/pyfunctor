@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from itertools import product
-from functor import Functor
+from pyfunctor.functor import Functor
 
 
 class ListF(Functor):
@@ -34,7 +34,7 @@ class ListF(Functor):
     @classmethod
     def lift(cls, f):
         def _f(*margs):
-            args = [Functor.run(m) for m in margs]
+            args = (Functor.run(m) for m in margs)
             return cls.fmap(f)(*args)
         return _f
 
